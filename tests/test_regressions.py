@@ -10,6 +10,67 @@ from custom_components.packages_esp.mail import Mail
 from custom_components.packages_esp.parsers import DeliveryEvent, parse
 
 
+def test_same_day_courier_update_preserves_booked_window():
+    ledger = Ledger()
+    ledger.apply(
+        DeliveryEvent(
+            "1",
+            "2026-11-16T09:00:00+00:00",
+            "Amazon",
+            retailer="Amazon",
+            orders=["1"],
+            expected_date="2026-11-17",
+            window=["08:00", "10:00"],
+            confidence="high",
+            scheduled=True,
+        )
+    )
+    ledger.apply(
+        DeliveryEvent(
+            "2",
+            "2026-11-17T07:00:00+00:00",
+            "Amazon",
+            retailer="Amazon",
+            orders=["1"],
+            expected_date="2026-11-17",
+            status="out_for_delivery",
+            confidence="high",
+        )
+    )
+    assert ledger.records()[0]["window"] == ["08:00", "10:00"]
+    ledger.apply(
+        DeliveryEvent(
+            "3",
+            "2026-11-17T08:00:00+00:00",
+            "Amazon",
+            retailer="Amazon",
+            orders=["1"],
+            expected_date="2026-11-18",
+            confidence="medium",
+        )
+    )
+    assert ledger.records()[0]["window"] is None
+
+
+def test_retailer_references_in_table_layouts():
+    for sender, subject, body, reference in [
+        (
+            "service@s.rituals.com",
+            "Confirmación del pedido",
+            "Resumen del pedido (¡has elegido bien!) 1 producto #euw15656000000",
+            "EUW15656000000",
+        ),
+        (
+            "spain@thomann.de",
+            "Shipping confirmation and invoice",
+            "Order number Order type Order date 202646.000001 Order 13.11.2026",
+            "202646.000001",
+        ),
+    ]:
+        event = parse(Mail("1", sender, subject, body, datetime.now(UTC)), "Europe/Madrid")[0]
+        assert reference in event.orders
+
+
 def test_shared_parcel_absorbs_second_order_placeholder():
     ledger = Ledger()
     for n in (1, 2):

@@ -13,7 +13,8 @@ jobs:
         with:
           python-version: '3.13'
           cache: pip
-      - run: pip install -r requirements-test.txt
+      - run: pip install uv==0.13.8
+      - run: uv pip install --system -r requirements-test.txt
       - run: ruff check .
       - run: ruff format --check .
       - run: pytest -q

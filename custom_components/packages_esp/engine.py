@@ -137,15 +137,19 @@ class Ledger:
                     continue
                 if key in parcel["overrides"] and parcel["overrides"][key] != value:
                     parcel["review_reason"] = "manual_conflict"
+                previous_value = parcel[key]
                 parcel[key] = value
                 parcel["field_times"][key] = event.at
                 if key == "expected_date":
+                    same_day = previous_value == value
                     parcel.update(
                         expected_end=event.expected_end,
-                        window=event.window,
+                        window=event.window or (parcel["window"] if same_day else None),
                         confidence=event.confidence,
-                        scheduled=event.scheduled,
+                        scheduled=event.scheduled or (parcel["scheduled"] if same_day else False),
                     )
+                    if parcel["review_reason"] == "conflicting_dates" and old_time != event.at:
+                        parcel["review_reason"] = None
             if datetime.fromisoformat(event.at) >= datetime.fromisoformat(parcel["updated_at"]):
                 parcel["updated_at"] = event.at
                 parcel["parsing_certainty"] = event.parsing_certainty
@@ -245,6 +249,11 @@ class Ledger:
     def override(self, parcel_id, values):
         parcel = self.data["parcels"][parcel_id]
         parcel["overrides"].update(values)
+        if "expected_date" in values and parcel.get("review_reason") in {
+            "conflicting_dates",
+            "manual_conflict",
+        }:
+            parcel["review_reason"] = None
 
     def clear_override(self, parcel_id):
         parcel = self.data["parcels"][parcel_id]

@@ -254,6 +254,12 @@ def parse(mail: Mail, timezone: str) -> list[DeliveryEvent]:
         found = re.findall(patterns[0], body + " " + mail.subject, re.I)
         found += re.findall(patterns[1], body + " " + mail.subject, re.I)
         event.orders = sorted({v.upper().rstrip(".") for v in found if re.search(r"\d", v)})
+        if family == "Rituals":
+            event.orders = sorted(
+                set(event.orders + re.findall(r"\bEUW\d{8,}\b", combined.upper()))
+            )
+        if family == "Thomann":
+            event.orders = sorted(set(event.orders + re.findall(r"\b\d{6}\.\d{6}\b", combined)))
     # URLs are evidence only, never fetched by a parser.
     for link in mail.links:
         parsed = urlparse(link)
