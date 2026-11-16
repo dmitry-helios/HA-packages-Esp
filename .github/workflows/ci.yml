@@ -45,4 +45,6 @@ jobs:
       - uses: hacs/action@main
         with:
           category: integration
-          ignore: brands
+          # Custom-repository installation does not require HACS store topics/branding.
+          ignore: brands topics
+          comment: false
