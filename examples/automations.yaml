@@ -1,0 +1,76 @@
+# Copy selected examples; replace notify.mobile_app_your_phone.
+# Add entry_id to action data if multiple accounts are configured.
+- alias: Deliveries morning summary
+  triggers:
+    - trigger: time
+      at: "08:00:00"
+  actions:
+    - action: packages_esp.get_summary
+      data:
+        day: today
+        hide_items: true
+      response_variable: deliveries
+    - action: notify.mobile_app_your_phone
+      data:
+        title: Deliveries today
+        message: "{{ deliveries.summary }}"
+
+- alias: Deliveries tomorrow preview
+  triggers:
+    - trigger: time
+      at: "20:00:00"
+  actions:
+    - action: packages_esp.get_summary
+      data:
+        day: tomorrow
+      response_variable: deliveries
+    - action: notify.mobile_app_your_phone
+      data:
+        title: Tomorrow
+        message: "{{ deliveries.summary }}"
+
+- alias: Delivery exceptions and pickup deadlines
+  triggers:
+    - trigger: event
+      event_type: packages_esp_delivery_changed
+  conditions:
+    - condition: time
+      after: "08:00:00"
+      before: "22:00:00"
+    - condition: template
+      value_template: >-
+        {{ trigger.event.data.change_type in ['collection_deadline', 'date_changed']
+           or (trigger.event.data.change_type == 'status_changed'
+               and trigger.event.data.parcel.status in ['ready_for_pickup', 'delivery_attempted', 'delayed']) }}
+  actions:
+    - action: packages_esp.get_summary
+      response_variable: deliveries
+    - action: notify.mobile_app_your_phone
+      data:
+        title: Delivery update
+        message: "{{ deliveries.summary }}"
+
+- alias: Assist - deliveries today
+  triggers:
+    - trigger: conversation
+      command:
+        - "What is arriving today"
+        - "What deliveries are expected today"
+  actions:
+    - action: packages_esp.get_summary
+      data:
+        day: today
+      response_variable: deliveries
+    - set_conversation_response: "{{ deliveries.summary }}"
+
+- alias: Assist - deliveries tomorrow
+  triggers:
+    - trigger: conversation
+      command:
+        - "What is arriving tomorrow"
+  actions:
+    - action: packages_esp.get_summary
+      data:
+        day: tomorrow
+      response_variable: deliveries
+    - set_conversation_response: "{{ deliveries.summary }}"

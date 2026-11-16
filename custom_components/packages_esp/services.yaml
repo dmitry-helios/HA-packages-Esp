@@ -1,0 +1,145 @@
+get_deliveries:
+  name: Get deliveries
+  description: Get deliveries for a configured Packages España account.
+  fields:
+    entry_id:
+      name: Account entry ID
+      description: Required only when more than one account is configured.
+      selector:
+        text:
+    parcel_id:
+      name: Parcel ID
+      required: false
+      selector:
+        text:
+get_summary:
+  name: Get spoken summary
+  description: Get spoken summary for a configured Packages España account.
+  fields:
+    entry_id:
+      name: Account entry ID
+      description: Required only when more than one account is configured.
+      selector:
+        text:
+    day:
+      name: Day
+      default: today
+      selector:
+        select:
+          options:
+            - today
+            - tomorrow
+    language:
+      name: Language
+      selector:
+        select:
+          options:
+            - en
+            - es
+    hide_items:
+      name: Hide item descriptions
+      selector:
+        boolean:
+refresh:
+  name: Refresh email
+  description: Refresh email for a configured Packages España account.
+  fields:
+    entry_id:
+      name: Account entry ID
+      description: Required only when more than one account is configured.
+      selector:
+        text:
+mark_delivered:
+  name: Mark delivered
+  description: Mark delivered for a configured Packages España account.
+  fields:
+    entry_id:
+      name: Account entry ID
+      description: Required only when more than one account is configured.
+      selector:
+        text:
+    parcel_id:
+      name: Parcel ID
+      required: true
+      selector:
+        text:
+mark_collected:
+  name: Mark collected
+  description: Mark collected for a configured Packages España account.
+  fields:
+    entry_id:
+      name: Account entry ID
+      description: Required only when more than one account is configured.
+      selector:
+        text:
+    parcel_id:
+      name: Parcel ID
+      required: true
+      selector:
+        text:
+set_expected_date:
+  name: Correct expected date
+  description: Correct expected date for a configured Packages España account.
+  fields:
+    entry_id:
+      name: Account entry ID
+      description: Required only when more than one account is configured.
+      selector:
+        text:
+    parcel_id:
+      name: Parcel ID
+      required: true
+      selector:
+        text:
+    date:
+      name: Date
+      required: true
+      selector:
+        date:
+ignore:
+  name: Ignore parcel
+  description: Ignore parcel for a configured Packages España account.
+  fields:
+    entry_id:
+      name: Account entry ID
+      description: Required only when more than one account is configured.
+      selector:
+        text:
+    parcel_id:
+      name: Parcel ID
+      required: true
+      selector:
+        text:
+snooze:
+  name: Snooze parcel notifications
+  description: Snooze parcel notifications for a configured Packages España account.
+  fields:
+    entry_id:
+      name: Account entry ID
+      description: Required only when more than one account is configured.
+      selector:
+        text:
+    parcel_id:
+      name: Parcel ID
+      required: true
+      selector:
+        text:
+    until:
+      name: Until (ISO timestamp with timezone)
+      required: true
+      selector:
+        text:
+clear_override:
+  name: Clear manual correction
+  description: Clear manual correction for a configured Packages España account.
+  fields:
+    entry_id:
+      name: Account entry ID
+      description: Required only when more than one account is configured.
+      selector:
+        text:
+    parcel_id:
+      name: Parcel ID
+      required: true
+      selector:
+        text:
