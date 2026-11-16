@@ -1,0 +1,13 @@
+{
+  "domain": "packages_esp",
+  "name": "Packages España",
+  "codeowners": ["@dmitry-helios"],
+  "config_flow": true,
+  "dependencies": ["application_credentials", "http"],
+  "documentation": "https://github.com/dmitry-helios/HA-packages-Esp",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/dmitry-helios/HA-packages-Esp/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

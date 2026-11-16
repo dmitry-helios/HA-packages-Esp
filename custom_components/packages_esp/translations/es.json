@@ -1,0 +1,83 @@
+{
+  "title": "Packages España",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Conectar Gmail",
+        "menu_options": {
+          "imap": "Gmail IMAP con contraseña de aplicación",
+          "oauth": "API de Gmail (Google OAuth)"
+        }
+      },
+      "imap": {
+        "title": "Gmail IMAP",
+        "description": "Usa una contraseña de aplicación de Google. Todos los mensajes debe estar visible por IMAP. No se marcan correos como leídos.",
+        "data": {
+          "username": "Dirección de Gmail",
+          "password": "Contraseña de aplicación"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reconectar Gmail",
+        "description": "Reconecta la cuenta para actualizar tus entregas."
+      }
+    },
+    "error": {
+      "invalid_auth": "Gmail rechazó la contraseña.",
+      "cannot_connect": "No se pudo conectar con Gmail."
+    },
+    "abort": {
+      "already_configured": "Esta cuenta ya está configurada.",
+      "wrong_account": "Reconecta la misma cuenta.",
+      "cannot_connect": "No se pudo leer el perfil de Gmail.",
+      "reauth_successful": "Cuenta reconectada."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opciones de entregas",
+        "data": {
+          "import_days": "Historial (días)",
+          "language": "Idioma de los resúmenes",
+          "hide_items": "Ocultar descripciones de artículos"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "today": {
+        "name": "Entregas hoy"
+      },
+      "tomorrow": {
+        "name": "Entregas mañana"
+      },
+      "pickups_ready": {
+        "name": "Listos para recoger"
+      },
+      "attention": {
+        "name": "Entregas que requieren atención"
+      },
+      "unknown": {
+        "name": "Entregas sin fecha"
+      },
+      "last_sync": {
+        "name": "Última sincronización"
+      }
+    },
+    "binary_sensor": {
+      "connected": {
+        "name": "Conectado"
+      }
+    },
+    "calendar": {
+      "expected_deliveries": {
+        "name": "Entregas previstas"
+      },
+      "pickup_deadlines": {
+        "name": "Plazos de recogida"
+      }
+    }
+  }
+}

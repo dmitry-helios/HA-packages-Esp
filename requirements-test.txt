@@ -1,0 +1,4 @@
+pytest-homeassistant-custom-component==0.13.245
+# Compatible with the aiodns version in the pinned HA 2025.5.2 test runtime.
+pycares==4.5.0
+ruff==0.17.5

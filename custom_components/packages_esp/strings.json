@@ -1,0 +1,83 @@
+{
+  "title": "Packages España",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect Gmail",
+        "menu_options": {
+          "imap": "Gmail IMAP app password",
+          "oauth": "Gmail API (Google OAuth)"
+        }
+      },
+      "imap": {
+        "title": "Gmail IMAP",
+        "description": "Use a Google app password. All Mail must be visible over IMAP. Messages are never marked read.",
+        "data": {
+          "username": "Gmail address",
+          "password": "App password"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reconnect Gmail",
+        "description": "Reconnect this account to resume delivery updates."
+      }
+    },
+    "error": {
+      "invalid_auth": "Gmail rejected the app password.",
+      "cannot_connect": "Could not connect to Gmail."
+    },
+    "abort": {
+      "already_configured": "This account is already configured.",
+      "wrong_account": "Reconnect the same Gmail account.",
+      "cannot_connect": "Could not read your Gmail profile.",
+      "reauth_successful": "Account reconnected."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Delivery tracker options",
+        "data": {
+          "import_days": "Import history (days)",
+          "language": "Summary language",
+          "hide_items": "Hide item descriptions in summaries"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "today": {
+        "name": "Deliveries today"
+      },
+      "tomorrow": {
+        "name": "Deliveries tomorrow"
+      },
+      "pickups_ready": {
+        "name": "Pickups ready"
+      },
+      "attention": {
+        "name": "Deliveries needing attention"
+      },
+      "unknown": {
+        "name": "Deliveries with unknown dates"
+      },
+      "last_sync": {
+        "name": "Last successful sync"
+      }
+    },
+    "binary_sensor": {
+      "connected": {
+        "name": "Connected"
+      }
+    },
+    "calendar": {
+      "expected_deliveries": {
+        "name": "Expected deliveries"
+      },
+      "pickup_deadlines": {
+        "name": "Pickup deadlines"
+      }
+    }
+  }
+}
